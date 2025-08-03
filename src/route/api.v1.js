@@ -4,6 +4,6 @@ const blogRouter = require("./blog.router");
 const commentRouter = require("./comment.router");
 const api = express.Router();
 api.use("/auth", authRouter);
-api.use("/blog", blogRouter);
-api.use("/comment", commentRouter);
+api.use("/blogs", blogRouter);
+api.use("/comments", commentRouter);
 module.exports = api;

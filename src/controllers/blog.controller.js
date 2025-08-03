@@ -31,7 +31,7 @@ exports.getAllBlogs = async (req, res, next) => {
       .populate("comments");
 
     res.status(200).json({
-      success: true,
+      status: "success",
       total: blogs.length,
       data: blogs,
     });

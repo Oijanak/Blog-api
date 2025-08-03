@@ -36,8 +36,8 @@ Make sure you have the following installed:
 1. **Clone the repository and install dependencies**
 
 ```bash
-git clone https://github.com/Oijanak/blog-api.git
-cd blog-api
+git clone https://github.com/Oijanak/Blog-api.git
+cd Blog-api
 npm install
 ```
 
@@ -179,13 +179,93 @@ Response
 | POST   | `/api/v1/comments/:blogId` | Add a comment to a blog (protected) |
 | DELETE | `/api/v1/comments/:id`     | Delete a comment (protected)        |
 
-### Query Params for `GET /api/v1/tasks`
+```json
+POST /api/v1/comments/:blogId
+Authorization: Bearer <token>
+Content-Type: application/json
+{
+    "content":"this is helpful"
+}
+
+Response
+{
+    "status": "success",
+    "data": {
+        "content": "this is helpful",
+        "author": "688f02aabaccffd1d1c9de39",
+        "blog": "688f38b091f2b30ec343ceb2",
+        "_id": "688f3d50ef9c06c056fa0b4a",
+        "createdAt": "2025-08-03T10:43:28.507Z",
+        "__v": 0
+    }
+}
+```
+
+### Query Params for `GET /api/v1/blogs`
 
 | Parameter | Type   | Required | Default | Description                                               |
 | --------- | ------ | -------- | ------- | --------------------------------------------------------- |
 | search    | String | No       | —       | Search term to match in title or description              |
 | tags      | String | No       | —       | Comma-separated tags to filter (`?tags=tech,programming`) |
 | sort      | String | No       | newest  | Sort option (`sort:oldest`,`sort:newest`)                 |
+
+```json
+GET /api/v1/blogs?tags=node,javascript&sort=oldest
+
+Response
+{
+    "status": "success",
+    "total": 2,
+    "data": [
+        {
+            "_id": "688f38b091f2b30ec343ceb2",
+            "title": "Getting Started with Node.js",
+            "description": "A beginner's guide to Node.js",
+            "content": "Node.js is a JavaScript runtime...",
+            "tags": [
+                "node",
+                "javascript",
+                "backend"
+            ],
+            "author": {
+                "_id": "688f02aabaccffd1d1c9de39",
+                "username": "janak"
+            },
+            "comments": [
+                {
+                    "_id": "688f3d50ef9c06c056fa0b4a",
+                    "content": "this is helpful",
+                    "author": "688f02aabaccffd1d1c9de39",
+                    "blog": "688f38b091f2b30ec343ceb2",
+                    "createdAt": "2025-08-03T10:43:28.507Z",
+                    "__v": 0
+                }
+            ],
+            "createdAt": "2025-08-03T10:23:44.484Z",
+            "updatedAt": "2025-08-03T10:43:28.519Z",
+            "__v": 1
+        },
+        {
+            "_id": "688f299073320d5dbb0786f0",
+            "title": "Learn Node.js",
+            "description": "A beginner guide to Node.js",
+            "content": "Node.js is a runtime environment for executing JavaScript on the server...",
+            "tags": [
+                "nodejs",
+                "javascript",
+                "backend"
+            ],
+            "author": {
+                "_id": "688f02aabaccffd1d1c9de39",
+                "username": "janak"
+            },
+            "comments": [],
+            "createdAt": "2025-08-03T09:19:12.239Z",
+            "updatedAt": "2025-08-03T09:19:12.239Z",
+            "__v": 0
+        },
+    ]}
+```
 
 ### Status Codes
 
