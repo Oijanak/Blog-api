@@ -33,19 +33,17 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
+  if (err.name === "JsonWebTokenError") {
+    return res.status(400).json({ status: "failed", message: "Invalid token" });
+  }
+  if (err.name === "TokenExpiredError") {
+    return res.status(400).json({ status: "failed", message: "Token expired" });
+  }
+
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     return res
       .status(err.status)
       .json({ status: "failed", message: "Invalid input JSON format" });
-  }
-
-  if (err.name === "JsonWebTokenError") {
-    const message = "Jwt not valid";
-    err = new ApiError(message, 400);
-  }
-  if (err.name === "TokenExpiredError") {
-    const message = "Jwt token Expired";
-    err = new ApiError(message, 400);
   }
 
   res.status(500).json({
