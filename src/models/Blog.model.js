@@ -5,6 +5,7 @@ const blogSchema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, "Title is required"],
+      unique: true,
       trim: true,
       maxlength: [100, "Title cannot exceed 100 characters"],
     },
@@ -20,6 +21,7 @@ const blogSchema = new mongoose.Schema(
     tags: {
       type: [String],
       default: [],
+      set: (tags) => tags.map((tag) => tag.toLowerCase()),
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,

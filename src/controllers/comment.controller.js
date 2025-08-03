@@ -39,6 +39,7 @@ exports.deleteComment = async (req, res, next) => {
     }
 
     const blog = await Blog.findById(comment.blog);
+
     if (
       comment.author.toString() !== req.user.id &&
       blog.author.toString() !== req.user.id
@@ -50,10 +51,10 @@ exports.deleteComment = async (req, res, next) => {
       $pull: { comments: comment._id },
     });
 
-    await comment.remove();
+    await comment.deleteOne();
 
     res.status(200).json({
-      status: "failed",
+      status: "success",
     });
   } catch (error) {
     next(error);

@@ -16,15 +16,13 @@ exports.getAllBlogs = async (req, res, next) => {
     }
 
     if (tags) {
-      query.tags = { $in: tags.split(",") };
+      query.tags = { $in: tags.split(",").map((e) => e.toLowerCase()) };
     }
 
     let sortBy = "-createdAt";
 
     if (sort === "oldest") {
       sortBy = "createdAt";
-    } else if (sort === "updated") {
-      sortBy = "-updatedAt";
     }
 
     const blogs = await Blog.find(query)
@@ -34,7 +32,7 @@ exports.getAllBlogs = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      count: blogs.length,
+      total: blogs.length,
       data: blogs,
     });
   } catch (error) {
@@ -74,7 +72,7 @@ exports.createBlog = async (req, res, next) => {
     const blog = await Blog.create(req.body);
 
     res.status(201).json({
-      success: true,
+      status: "sccess",
       data: blog,
     });
   } catch (error) {
@@ -100,7 +98,7 @@ exports.updateBlog = async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: true,
+      status: "success",
       data: blog,
     });
   } catch (error) {
@@ -122,7 +120,7 @@ exports.deleteBlog = async (req, res, next) => {
 
     await Comment.deleteMany({ blog: blog._id });
 
-    await blog.remove();
+    await blog.deleteOne();
 
     res.status(200).json({
       status: "success",

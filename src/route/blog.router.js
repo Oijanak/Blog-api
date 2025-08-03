@@ -16,7 +16,8 @@ blogRouter.post("/", authenticate, validate(blogValidation.create), createBlog);
 blogRouter.put(
   "/:id",
   authenticate,
-  validate(blogValidation.update, updateBlog)
+  validate(blogValidation.update),
+  updateBlog
 );
 blogRouter.delete("/:id", authenticate, deleteBlog);
 module.exports = blogRouter;
