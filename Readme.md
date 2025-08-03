@@ -66,7 +66,7 @@ npm install
 
 You can access the deployed version of this API at:
 
-🔗 [`vercel`](https://task-manager-api-bay-theta.vercel.app/api/v1/tasks)
+🔗 [`vercel`](https://blog-api-rust-delta.vercel.app/api/v1/blogs)
 
 ## API Endpoints
 
